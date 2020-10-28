@@ -8,6 +8,10 @@ terraform {
   required_version = ">= 0.12"
 }
 
+local {
+  cluster_name_prefix = "${trimsuffix(var.cluster_name, "-")}-"
+}
+
 # ---------------------------------------------------------------------------------------------------------------------
 # CREATE A REGIONAL MANAGED INSTANCE GROUP TO RUN THE CONSUL SERVERS
 # ---------------------------------------------------------------------------------------------------------------------
@@ -53,7 +57,7 @@ resource "google_compute_region_instance_group_manager" "consul_server" {
 resource "google_compute_instance_template" "consul_server" {
   project = var.gcp_project_id
 
-  name_prefix = var.cluster_name
+  name_prefix = local.cluster_name_prefix
   description = var.cluster_description
 
   instance_description = var.cluster_description
