@@ -60,6 +60,8 @@ resource "google_compute_instance_template" "consul_server" {
   name_prefix = local.cluster_name_prefix
   description = var.cluster_description
 
+  labels = var.cluster_labels
+
   instance_description = var.cluster_description
   machine_type         = var.machine_type
 
